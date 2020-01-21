@@ -37,7 +37,7 @@ copyJar() {
 
     echo "Copying JAR file"
     rm -f /opt/pesaplusdashboard/bin/pesaplusdashboard-0.0.1-SNAPSHOT.jar
-    cp /home/patrick/pesaplusapp/pesaplusdahsboard/target/pesaplusdashboard-0.0.1-SNAPSHOT.jar /opt/pesaplus/bin/
+    cp /home/patrick/pesaplusapp/pesaplusdahsboard/target/pesaplusdashboard-0.0.1-SNAPSHOT.jar /opt/pesaplusdashboard/bin/
     echo "Copy complete."
 }
 
