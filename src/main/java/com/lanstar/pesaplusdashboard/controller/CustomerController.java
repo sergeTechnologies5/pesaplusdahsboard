@@ -1,7 +1,6 @@
 package com.lanstar.pesaplusdashboard.controller;
 
-import com.lanstar.pesaplusdashboard.model.Customer;
-import com.lanstar.pesaplusdashboard.model.Sacco;
+import com.lanstar.pesaplusdashboard.model.*;
 import com.lanstar.pesaplusdashboard.payload.User;
 import com.lanstar.pesaplusdashboard.retrofit.network.ApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,14 +93,18 @@ public class CustomerController {
     @PostMapping("/createCustomer")
     public String createCustomer(@SessionAttribute("user") User user,
                                  RedirectAttributes redirectAttributes,
-                                 @ModelAttribute Customer customer,
+                                 @ModelAttribute CustomerInfo customer,
                                  final  Model model, HttpSession session) throws IOException {
 
        // redirectAttributes.addAttribute("message","Registration Successful");
-
-
+//set default
+        CustomerModel customerModel= new CustomerModel();
+        customerModel.setMnoInfo(new MnoInfo(1L));
+        customerModel.setSaccoInfo(new SaccoInfo(73L));
+        customerModel.setCustomerInfo(customer);
+        System.out.println(customerModel);
         apiClient.setAuthToken(user.getToken());
-        Response<String> response = apiClient.getService().createCustomer(customer).execute();
+        Response<String> response = apiClient.getService().createCustomer(customerModel).execute();
         if (response.isSuccessful()){
             //  JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
             //   String token = jsonObject.get("token").getAsString();
@@ -124,6 +127,7 @@ public class CustomerController {
             model.addAttribute("error", "Unauthorized Access");
             System.out.println("Error"+response.errorBody().string());
             String message="Registration Not Successful";
+            session.setAttribute("mySessionAttribute", "Registration Not Successful");
             return "redirect:/customers/create_customer?message="+message;
         }
     }

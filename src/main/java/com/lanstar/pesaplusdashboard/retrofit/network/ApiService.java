@@ -5,6 +5,7 @@ package com.lanstar.pesaplusdashboard.retrofit.network;
 import java.util.List;
 
 import com.lanstar.pesaplusdashboard.model.Customer;
+import com.lanstar.pesaplusdashboard.model.CustomerModel;
 import com.lanstar.pesaplusdashboard.model.Sacco;
 import  com.lanstar.pesaplusdashboard.payload.SigninRequest;
 
@@ -36,7 +37,7 @@ public interface ApiService {
 
     // create Customer
     @POST("api/v1/member")
-    Call<String> createCustomer(@Body Customer request);
+    Call<String> createCustomer(@Body CustomerModel request);
 
 
 
