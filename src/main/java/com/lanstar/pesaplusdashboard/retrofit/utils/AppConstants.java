@@ -17,7 +17,7 @@ public class AppConstants {
     /**
      * Base URL
      */
-    public static final String BASE_URL = "https://197.248.124.61:9095/";
-   // public static final String BASE_URL = "https://localhost:9095/";
+   // public static final String BASE_URL = "https://197.248.124.61:9095/";
+    public static final String BASE_URL = "https://localhost:9095/";
 
 }
