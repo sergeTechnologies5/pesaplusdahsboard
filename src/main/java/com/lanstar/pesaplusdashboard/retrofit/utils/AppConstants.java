@@ -1,4 +1,4 @@
-package com.lanstar.tablebank.util;
+package com.lanstar.pesaplusdashboard.retrofit.utils;
 
 public class AppConstants {
 
@@ -17,6 +17,6 @@ public class AppConstants {
     /**
      * Base URL
      */
-    public static final String BASE_URL = "http://197.248.0.222:8087/";
+    public static final String BASE_URL = "https://197.248.124.61:9095/";
 
 }

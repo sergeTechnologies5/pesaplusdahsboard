@@ -1,4 +1,4 @@
-package com.lanstar.pesaplusdashboard.controller.ui;
+package com.lanstar.pesaplusdashboard.controller;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

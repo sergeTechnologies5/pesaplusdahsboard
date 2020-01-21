@@ -1,21 +1,29 @@
 <!-- sidebar: style can be found in sidebar.less -->
-<section class="sidebar">
+<section class="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
         <li class="active treeview">
-            <a href="/">
+            <a href="/transactions/mpesa_fosa">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             </a>
         </li>
+
         <li class="treeview">
-            <a href="/">
+            <a href="/dashboard/index">
                 <img style="width:40px;height:40px"  src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
 
                 <span>
-                Kevin
+              <span th:text="${user.username != null ? user.username : 'NOT FOUND'}"></span>
             </span>
             </a>
         </li>
+
+        <li class="active treeview">
+            <a href="/sacco/create_sacco">
+                <i class="fa fa-dashboard"></i> <span>Create Sacco</span>
+            </a>
+        </li>
+
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-briefcase"></i>

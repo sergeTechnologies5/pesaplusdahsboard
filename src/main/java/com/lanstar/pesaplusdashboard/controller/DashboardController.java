@@ -1,5 +1,6 @@
-package com.lanstar.pesaplusdashboard.controller.ui;
+package com.lanstar.pesaplusdashboard.controller;
 
+import com.lanstar.pesaplusdashboard.model.Sacco;
 import com.lanstar.pesaplusdashboard.payload.User;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,17 @@ public class DashboardController {
         return "dashboard/index";
     }
 
-    @RequestMapping("customers/add")
+    @RequestMapping("customers/create_customer")
     public String addCustomer(@SessionAttribute("user") User user, final Model model ) {
         model.addAttribute("user",user);
-        return "customers/form";
+        return "customers/create_customer";
+    }
+
+    @RequestMapping("sacco/create_sacco")
+    public String addSacco(@SessionAttribute("user") User user, final Model model ) {
+        model.addAttribute("user",user);
+        model.addAttribute("sacco",new Sacco());
+        return "sacco/create_sacco";
     }
 
 

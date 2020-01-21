@@ -1,6 +1,5 @@
-package com.lanstar.tablebank.network.interceptor;
+package com.lanstar.pesaplusdashboard.retrofit.interceptor;
 
-import androidx.annotation.NonNull;
 
 import java.io.IOException;
 
@@ -17,7 +16,7 @@ public class AuthInterceptor implements Interceptor {
     }
 
     @Override
-    public Response intercept(@NonNull Chain chain) throws IOException {
+    public Response intercept(Chain chain) throws IOException {
         Request request  = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer " + mAuthToken)
                 .build();

@@ -2,7 +2,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
       layout:decorator="layout">
 <head>
-    <title>Dashboard</title>
+    <title>Register Customer</title>
 </head>
 <body>
 <section layout:fragment="header">
@@ -20,25 +20,243 @@
                 <a href="/customers" type="button" class="btn btn-box-tool"><i class="fa fa-list-ul"></i></a>
             </div>
         </div>
-        <form data-toggle="validator" role="form" th:object="${customer}" th:action="@{/customers/save}" method="post">
+        <form data-toggle="validator" role="form" method="post">
             <div class="box-body">
-                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden"/>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Firstname">FirstName</label>
+                            <input type="text" required="true" class="form-control" id="firstname"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Lastname">LastName</label>
+                            <input type="text" required="true" class="form-control" id="lastname"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="secondName">Second Name</label>
+                            <input type="text" required="true" class="form-control" id="secondName"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="text" required="true" class="form-control" id="phoneNumber"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="mpesaName">Mpesa Name</label>
+                            <input type="text" required="true" class="form-control" id="mpesaName"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" required="true" class="form-control" id="email"/>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="form-group">
-                    <label for="Firstname">FirstName</label>
-                    <input type="text" required="true" class="form-control" th:field="*{firstname}" id="firstname" />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="nationalId">National Id</label>
+                            <input type="text" required="true" class="form-control" id="nationalId"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="passportNo">Passport No</label>
+                            <input type="text" required="true" class="form-control" id="passportNo"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="accNumber">Account No</label>
+                            <input type="text" required="true" class="form-control" id="accNumber"/>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="Lastname">LastName</label>
-                    <input type="text" required="true" class="form-control" th:field="*{lastname}" id="lastname" />
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" required="true" class="form-control" id="address"/>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="canTransferPoints">Can TransferPoints</label>
+                            <select class="form-control" id="canTransferPoints" name="canTransferPoints">
+                                <option value="">Select option</option>
+                                <option th:value="'True'" th:text="True"></option>
+                                <option th:value="'False'" th:text="False"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="noCustomers">No of Customers</label>
+                            <input type="text" required="true" class="form-control" id="noCustomers"/>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" required="true" class="form-control" th:field="*{email}" id="email" />
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="isAgent">Is Agent</label>
+                            <select class="form-control" id="isAgent" name="isAgent">
+                                <option value="">Select option</option>
+                                <option th:value="'True'" th:text="True"></option>
+                                <option th:value="'False'" th:text="False"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="isGroup">Is Group</label>
+                        <select class="form-control" id="isGroup" name="isGroup">
+                            <option value="">Select option</option>
+                            <option th:value="'True'" th:text="True"></option>
+                            <option th:value="'False'" th:text="False"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="groupsRestricted">Group Restricted</label>
+                        <select class="form-control" id="groupsRestricted" name="groupsRestricted">
+                            <option value="">Select option</option>
+                            <option th:value="'True'" th:text="True"></option>
+                            <option th:value="'False'" th:text="False"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="active">Active</label>
+                            <select class="form-control" id="active" name="active">
+                                <option value="">Select option</option>
+                                <option th:value="'True'" th:text="True"></option>
+                                <option th:value="'False'" th:text="False"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="exemptLimit">Exempt Limit</label>
+                        <select class="form-control" id="exemptLimit" name="exemptLimit">
+                            <option value="">Select option</option>
+                            <option th:value="'True'" th:text="True"></option>
+                            <option th:value="'False'" th:text="False"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="pendingLoan">Pending Loan</label>
+                        <select class="form-control" id="pendingLoan" name="pendingLoan">
+                            <option value="">Select option</option>
+                            <option th:value="'True'" th:text="True"></option>
+                            <option th:value="'False'" th:text="False"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="newAccount">New Account</label>
+                        <select class="form-control" id="newAccount" name="newAccount">
+                            <option value="">Select option</option>
+                            <option th:value="'True'" th:text="True"></option>
+                            <option th:value="'False'" th:text="False"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="advanceLimit">Advance Limit</label>
+                            <input type="number" required="true" class="form-control" id="advanceLimit"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="loanBalance">loanBalance</label>
+                            <input type="number" required="true" class="form-control" id="loanBalance"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="arears">Aarears</label>
+                            <input type="number" required="true" class="form-control" id="arears"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="balAmount">Balance Amount</label>
+                            <input type="number" required="true" class="form-control" id="balAmount"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="bonus">No of Customers</label>
+                            <input type="number" required="true" class="form-control" id="bonus"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="netWorth">Net Worth</label>
+                            <input type="number" required="true" class="form-control" id="netWorth"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="bonus">No of Customers</label>
+                            <input type="number" required="true" class="form-control" id="bonus"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="savings">Loan Balance</label>
+                            <input type="number" required="true" class="form-control" id="savings"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="withdrawalLimit">Withdrawal Limit</label>
+                            <input type="number" required="true" class="form-control" id="withdrawalLimit"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="mnoInfo">Mno Info</label>
+                        <select class="form-control" id="mnoInfo" name="mnoInfo">
+                            <option value="">Select option</option>
+                            <option th:value="'True'" th:text="True"></option>
+                            <option th:value="'False'" th:text="False"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="saccoInfo">Mno Info</label>
+                        <select class="form-control" id="saccoInfo" name="saccoInfo">
+                            <option value="">Select option</option>
+                            <option th:value="'True'" th:text="True"></option>
+                            <option th:value="'False'" th:text="False"></option>
+                        </select>
+                    </div>
+
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Register Customer</button>
             </div>
         </form>
     </div>

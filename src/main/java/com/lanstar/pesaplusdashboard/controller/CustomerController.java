@@ -1,9 +1,6 @@
-package com.lanstar.pesaplusdashboard.controller.ui;
+package com.lanstar.pesaplusdashboard.controller;
 
-import com.lanstar.pesaplusdashboard.domain.model.Customer;
-import com.lanstar.pesaplusdashboard.service.CustomersService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import com.lanstar.pesaplusdashboard.model.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +17,7 @@ public class CustomerController {
     public ModelAndView index( Model model) {
 //        Page<Customer> page = customerService.getList(1);
 //        int current = page.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
+       // int begin = Math.max(1, current - 5);
        /// int end = Math.min(begin + 10, page.getTotalPages());
 
 //        model.addAttribute("customers", page);
@@ -70,7 +67,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/customers/save", method = RequestMethod.POST)
     public String save(Customer customer, final RedirectAttributes ra) {
-        Customer save = customerService.save(customer);
+       // Customer save = customerService.save(customer);
         ra.addFlashAttribute("successFlash", "Record Saved Successfully.");
         return "redirect:/customers";
 
@@ -78,8 +75,7 @@ public class CustomerController {
 
     @RequestMapping("/customers/delete/{id}")
     public String delete(@PathVariable Long id, final RedirectAttributes ra) {
-
-        customerService.delete(id);
+      //  customerService.delete(id);
         ra.addFlashAttribute("successFlash", "Record Deleted Successfully.");
         return "redirect:/customers";
 
