@@ -98,33 +98,34 @@ public class CustomerController {
                                  final  Model model, HttpSession session) throws IOException {
 
        // redirectAttributes.addAttribute("message","Registration Successful");
-        session.setAttribute("mySessionAttribute", "Registration Successful");
-        String message="Registration Successful";
-      //  model.addAttribute("message","Registration Successful");
-        return "redirect:/customers/create_customer?message="+message;
 
-//        apiClient.setAuthToken(user.getToken());
-//        Response<String> response = apiClient.getService().createCustomer(customer).execute();
-//        if (response.isSuccessful()){
-//            //  JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
-//            //   String token = jsonObject.get("token").getAsString();
-//            //  ModelAndView modelAndView = new ModelAndView();
-//            // modelAndView.addObject("user", user);
-//            //  model.addAttribute("user", user);
-//            redirectAttributes.addAttribute("message","Registration Successful");
-//            System.out.println("ResponseBody:::"+response.body().toString());
-//            System.out.println("ResponseHeader:::"+response.headers().toString());
-//            System.out.println("Response"+response.toString());
-//            model.addAttribute("message","Registration Successful");
-//            return "redirect:"+"/customers/create_customer";
-//        }else {
-//            System.out.println("Error");
-//            //  model.addAttribute("error", "Unauthorized Access");
-//            redirectAttributes.addAttribute("message","Registration Unsuccessful");
-//              model.addAttribute("error", "Unauthorized Access");
-//            System.out.println("Error"+response.errorBody().string());
-//            return "redirect:"+"/customers/create_customer";
-//        }
+
+        apiClient.setAuthToken(user.getToken());
+        Response<String> response = apiClient.getService().createCustomer(customer).execute();
+        if (response.isSuccessful()){
+            //  JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
+            //   String token = jsonObject.get("token").getAsString();
+            //  ModelAndView modelAndView = new ModelAndView();
+            // modelAndView.addObject("user", user);
+            //  model.addAttribute("user", user);
+            redirectAttributes.addAttribute("message","Registration Successful");
+            System.out.println("ResponseBody:::"+response.body().toString());
+            System.out.println("ResponseHeader:::"+response.headers().toString());
+            System.out.println("Response"+response.toString());
+            model.addAttribute("message","Registration Successful");
+            session.setAttribute("mySessionAttribute", "Registration Successful");
+            String message="Registration Successful";
+            //  model.addAttribute("message","Registration Successful");
+            return "redirect:/customers/create_customer?message="+message;
+        }else {
+            System.out.println("Error");
+            //  model.addAttribute("error", "Unauthorized Access");
+            redirectAttributes.addAttribute("message","Registration Unsuccessful");
+            model.addAttribute("error", "Unauthorized Access");
+            System.out.println("Error"+response.errorBody().string());
+            String message="Registration Not Successful";
+            return "redirect:/customers/create_customer?message="+message;
+        }
     }
 
 }
