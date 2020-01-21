@@ -56,14 +56,14 @@ stop() {
 
 createSystemdService() {
 
-    echo "Setting up a systemd service"
+    echo "Setting up a systemd service PesaPlusDashboard"
 
     stop
-    systemctl disable AirtimeDashSacco.service > /dev/null
+    systemctl disable PesaPlusDashboard.service > /dev/null
     rm -f /lib/systemd/system/PesaPlusDashboard.service
     cp /home/patrick/pesaplusapp/pesaplusdahsboard/scripts/PesaPlusDashboard.service /lib/systemd/system/
     systemctl daemon-reload
-    systemctl enable AirtimeDashSacco.service
+    systemctl enable PesaPlusDashboard.service
 
     echo "Done."
 }
