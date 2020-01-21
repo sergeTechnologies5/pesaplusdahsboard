@@ -1,6 +1,6 @@
 package com.lanstar.pesaplusdashboard.controller.ui;
 
-import com.lanstar.pesaplusdashboard.model.Customers;
+import com.lanstar.pesaplusdashboard.domain.model.Customer;
 import com.lanstar.pesaplusdashboard.service.CustomersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,24 +15,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class CustomerController {
 
-    private CustomersService customerService;
-
-    @Autowired
-    public void setCustomerService(CustomersService customerService) {
-        this.customerService = customerService;
-    }
 
     @RequestMapping(value = {"/customers"}, method = {RequestMethod.GET})
     public ModelAndView index( Model model) {
-        Page<Customers> page = customerService.getList(1);
-        int current = page.getNumber() + 1;
+//        Page<Customer> page = customerService.getList(1);
+//        int current = page.getNumber() + 1;
         int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, page.getTotalPages());
+       /// int end = Math.min(begin + 10, page.getTotalPages());
 
-        model.addAttribute("list", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
+//        model.addAttribute("customers", page);
+//        model.addAttribute("beginIndex", begin);
+//        model.addAttribute("endIndex", end);
+//        model.addAttribute("currentIndex", current);
 
         ModelAndView modelAndView = new ModelAndView("customers/list");
         return modelAndView;
@@ -40,16 +34,16 @@ public class CustomerController {
 
     @RequestMapping(value = "/customers/{pageNumber}", method = RequestMethod.GET)
     public ModelAndView list(@PathVariable Integer pageNumber, Model model) {
-        Page<Customers> page = customerService.getList(pageNumber);
+//        Page<Customer> page = customerService.getList(pageNumber);
+//
+//        int current = page.getNumber() + 1;
+//        int begin = Math.max(1, current - 5);
+//        int end = Math.min(begin + 10, page.getTotalPages());
 
-        int current = page.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, page.getTotalPages());
-
-        model.addAttribute("list", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
+//        model.addAttribute("list", page);
+//        model.addAttribute("beginIndex", begin);
+//        model.addAttribute("endIndex", end);
+//        model.addAttribute("currentIndex", current);
         ModelAndView modelAndView = new ModelAndView("customers/list");
 
         return modelAndView;
@@ -60,7 +54,7 @@ public class CustomerController {
     public ModelAndView add(ModelAndView modelAndView) {
 
         modelAndView.setViewName("customers/form");
-        modelAndView.addObject("customer", new Customers());
+       // modelAndView.addObject("customer", new Customer());
         return modelAndView;
 
     }
@@ -68,28 +62,27 @@ public class CustomerController {
     @RequestMapping("/customers/edit/{id}")
     public ModelAndView edit(@PathVariable Long id, Model model) {
 
-       // model.addAttribute("customer", customerService.get(id));
+     //   model.addAttribute("customer", customerService.get(id));
         ModelAndView modelAndView = new ModelAndView("customers/form");
         return modelAndView;
 
     }
 
     @RequestMapping(value = "/customers/save", method = RequestMethod.POST)
-    public String save(Customers customer, final RedirectAttributes ra) {
-
-       // Customers save = customerService.save(customer);
+    public String save(Customer customer, final RedirectAttributes ra) {
+        Customer save = customerService.save(customer);
         ra.addFlashAttribute("successFlash", "Record Saved Successfully.");
-        return "redirect:/";
+        return "redirect:/customers";
 
     }
 
     @RequestMapping("/customers/delete/{id}")
-    public ModelAndView delete(@PathVariable Long id, final RedirectAttributes ra) {
+    public String delete(@PathVariable Long id, final RedirectAttributes ra) {
 
         customerService.delete(id);
         ra.addFlashAttribute("successFlash", "Record Deleted Successfully.");
-        ModelAndView modelAndView = new ModelAndView("customers/list");
-        return modelAndView;
+        return "redirect:/customers";
+
 
     }
 
