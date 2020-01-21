@@ -21,7 +21,6 @@ public class MpesaController {
     }
     @RequestMapping(value = "view_float", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView view_float() {
-
         ModelAndView modelAndView = new ModelAndView("mpesa/view_mpesa_float");
         return modelAndView;
     }

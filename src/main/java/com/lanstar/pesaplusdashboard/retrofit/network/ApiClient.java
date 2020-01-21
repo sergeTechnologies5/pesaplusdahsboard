@@ -27,7 +27,7 @@ public class ApiClient {
 
     private Retrofit retrofit;
     private boolean isDebug = true;
-    private String mAuthToken;
+    private static String mAuthToken;
 
     private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 
@@ -85,9 +85,8 @@ public class ApiClient {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         }
 
-       // OkHttpClient.Builder okhttpBuilder = okHttpClient();
+        // OkHttpClient.Builder okhttpBuilder = okHttpClient();
         OkHttpClient okhttpBuilder1 = getUnsafeOkHttpClient();
-
 
 
 //        if (mAuthToken != null && !mAuthToken.isEmpty()) {
@@ -111,7 +110,7 @@ public class ApiClient {
     public static OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
@@ -136,7 +135,7 @@ public class ApiClient {
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
@@ -149,6 +148,9 @@ public class ApiClient {
                     .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                     .addInterceptor(httpLoggingInterceptor);
+            if (mAuthToken != null && !mAuthToken.isEmpty()) {
+                builder.addInterceptor(new AuthInterceptor(mAuthToken));
+            }
 
 
             OkHttpClient okHttpClient = builder.build();

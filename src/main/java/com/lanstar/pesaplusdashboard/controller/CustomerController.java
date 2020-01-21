@@ -1,13 +1,19 @@
 package com.lanstar.pesaplusdashboard.controller;
 
 import com.lanstar.pesaplusdashboard.model.Customer;
+import com.lanstar.pesaplusdashboard.model.Sacco;
+import com.lanstar.pesaplusdashboard.payload.User;
+import com.lanstar.pesaplusdashboard.retrofit.network.ApiClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import retrofit2.Response;
+
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 public class CustomerController {
@@ -80,6 +86,45 @@ public class CustomerController {
         return "redirect:/customers";
 
 
+    }
+
+    @Autowired
+    ApiClient apiClient;
+
+    @PostMapping("/createCustomer")
+    public String createCustomer(@SessionAttribute("user") User user,
+                                 RedirectAttributes redirectAttributes,
+                                 @ModelAttribute Customer customer,
+                                 final  Model model, HttpSession session) throws IOException {
+
+       // redirectAttributes.addAttribute("message","Registration Successful");
+        session.setAttribute("mySessionAttribute", "Registration Successful");
+        String message="Registration Successful";
+      //  model.addAttribute("message","Registration Successful");
+        return "redirect:/customers/create_customer?message="+message;
+
+//        apiClient.setAuthToken(user.getToken());
+//        Response<String> response = apiClient.getService().createCustomer(customer).execute();
+//        if (response.isSuccessful()){
+//            //  JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
+//            //   String token = jsonObject.get("token").getAsString();
+//            //  ModelAndView modelAndView = new ModelAndView();
+//            // modelAndView.addObject("user", user);
+//            //  model.addAttribute("user", user);
+//            redirectAttributes.addAttribute("message","Registration Successful");
+//            System.out.println("ResponseBody:::"+response.body().toString());
+//            System.out.println("ResponseHeader:::"+response.headers().toString());
+//            System.out.println("Response"+response.toString());
+//            model.addAttribute("message","Registration Successful");
+//            return "redirect:"+"/customers/create_customer";
+//        }else {
+//            System.out.println("Error");
+//            //  model.addAttribute("error", "Unauthorized Access");
+//            redirectAttributes.addAttribute("message","Registration Unsuccessful");
+//              model.addAttribute("error", "Unauthorized Access");
+//            System.out.println("Error"+response.errorBody().string());
+//            return "redirect:"+"/customers/create_customer";
+//        }
     }
 
 }
