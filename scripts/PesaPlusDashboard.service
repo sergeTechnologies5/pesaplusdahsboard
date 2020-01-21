@@ -1,0 +1,14 @@
+[Unit]
+Description=PesaPlusDashboard Service
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+
+[Service]
+User=root
+Type=simple
+ExecStart=/opt/jdk8u222-b10-hotspot/bin/java -jar /opt/pesaplusdashboard/bin/pesaplusdashboard-0.0.1-SNAPSHOT.jar -Xms2G -Xmx8G
+ExecStop=/usr/bin/kill -9 `systemctl show PesaPlusDashboard.service --property MainPID | grep -o '[[:digit:]]*'`
+
+[Install]
+WantedBy=multi-user.target
