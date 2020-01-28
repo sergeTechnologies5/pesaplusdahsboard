@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>View Customers</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Saccos</h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Customers</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+        <div class="page-title">
+            <h2>
+                <span class="fa fa-arrow-circle-o-left"></span> All Custustomes
+            </h2>
+        </div>
+        <!-- END PAGE TITLE -->
+
+        <div class="row">
+            <!--            <table width="100%" class="display" id="example"></table>-->
+
+            <!--                   ACTION INCLUDE <span>Edit</span>-->
+            <!--                        <span>Activate/Deactivate</span>-->
+            <!--                        <span>Reset  Pin</span>-->
+            <table class="table datatable display" id="customers">
+                <thead>
+                <tr>
+                    <th>Names</th>
+                    <th>Phone Number</th>
+                    <th>Customer ID</th>
+                    <th>Registered/Not Registered</th>
+                    <th>Active/InActive</th>
+                    <th>Action</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+                <tr th:each="clientlist : ${customerRList}">
+                    <td th:text="${clientlist.customerFirstName} +' '+ ${clientlist.customerLastName} ">Text ...</td>
+                    <td th:text="${clientlist.customerPhoneNumber}">Text ...</td>
+                    <td th:text="${clientlist.id}">Text ...</td>
+                    <td >
+                        <div th:switch="${clientlist.isRegistrationComplete}">
+                        <p th:case="'false'">Not Registered</p>
+                        <p th:case="'true'">Registered</p>
+                        <p th:case="*">NA</p>
+                    </div></td>
+                    <td>
+                        <div th:switch="${clientlist.customerStatus}">
+                            <p th:case="'false'">Not Active</p>
+                            <p th:case="'true'">Active</p>
+                            <p th:case="*">NA</p>
+                        </div>
+                    </td>
+
+                    <td>
+                        <ul id="uListActionCustomer">
+                            <li><a href="#" class="editing"> Edit</a></li>
+                            <li><a href="#" class="resetPin"> Reset Pin </a></li>
+                            <li><a href="#" class="activate"> Activate </a></li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <th>Names</th>
+                    <th>Phone Number</th>
+                    <th>Customer ID</th>
+                    <th>Registered/Not Registered</th>
+                    <th>Active/InActive</th>
+                    <th>Action</th>
+                </tr>
+                </tfoot>
+
+
+            </table>
+
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Change Customer Pin</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form data-toggle="validator" id="my-form" method="post">
+                                <div class="box-body">
+                                    <input type="hidden"/>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="customerId">Customer ID</label>
+                                                <input type="text" disabled="true" class="form-control" id="customerId"
+                                                       name="customer"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="names">Names</label>
+                                                <input type="text" class="form-control" id="names" name="names"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="phoneNumber">Phone Number</label>
+                                                <input type="text" class="form-control" id="phoneNumber"
+                                                       name="phone"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- reset pin modal -->
+            <div class="modal fade" id="resetPin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="resetPinTitle">Reset Customer Pin</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                            <h4>Are you sure, you want to reset pin for </h4>
+                            <p><b>Names:</b> <span id="resetPinNames"></span></p>
+                            <p><b>Customer ID:</b> <span id="resetPinCustomerID"></span></p>
+                            <p><b>Phone Number :</b> <span id="resetPinPhoneNumber"></span></p>
+                            </p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Reset PIN</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="margin-bottom: 100px">
+
+            </div>
+
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    var table = $('#customers').DataTable({
+                        searching:true,
+                        paging:true,
+                        select: true
+                    });
+                    table.column(2).visible(false);
+
+                    //implement search within column
+                    // $("#customers tfoot  th").each(function () {
+                    //     var title=$("#customers thead  th").eq($(this).index()).text();
+                    //     $(this).html('<input type="text" placeholder="search '+title+ '" />');
+                    // });
+
+                    $("#customers thead  th").each(function () {
+                        var title=$("#customers tfoot  th").eq($(this).index()).text();
+                        $(this).html('<input type="text" placeholder="search '+title+ '" />');
+                    });
+
+                    table.columns().every(function () {
+                        var datatableColumn= this;
+                        var searchTextBox=$(this.header()).find('input');
+                        searchTextBox.on('keyup change', function () {
+                            datatableColumn.search(this.value).draw();
+                        } );
+                        searchTextBox.on('click', function (e) {
+                            e.stopPropagation();
+                        })
+                    });
+
+
+
+                    //  $('td:nth-child(3),th:nth-child(3)').hide();
+                    //open Modal for editing
+                    table.on('click', '.editing', function () {
+                        $tr = $(this).closest('tr');
+                        var data = table.row($tr).data();
+                        $("#names").val(data[0]);
+                        $("#phoneNumber").val(data[1]);
+                        $("#customerId").val(data[2]);
+                        $("#editModal").modal();
+                        // alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+                    });
+
+                    //open modal for reset pin
+                    table.on('click', '.resetPin', function () {
+                        $tr = $(this).closest('tr');
+                        var data = table.row($tr).data();
+                        $("#resetPinNames").html(data[0]);
+                        $("#resetPinCustomerID").html(data[2]);
+                        $("#resetPinPhoneNumber").html(data[1]);
+                        $("#resetPin").modal();
+                        // alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+                    });
+
+
+                    $('#my-form').submit(function processChangePin(e) {
+                        var dataForm = {
+                            pin: $("#pin").val(),
+                            phoneNumber: $("#phoneNumber").val(),
+                            id: $("#customerId").val()
+                        };
+
+                        console.log(JSON.stringify(dataForm));
+
+                        //   url: 'https://197.248.124.61:9095/api/v1/member/reset-pin',
+                        $.ajax({
+                            url: '/update_customer_pin',
+                            type: 'post',
+                            contentType: 'application/json',
+                            data: JSON.stringify(dataForm),
+                            success: function (data, textStatus, jQxhr) {
+                                $('#editModal').modal('hide');
+                                $("#snackbar").html(data).addClass("show");
+                                setTimeout(function () {
+                                    $("#snackbar").removeClass("show");
+                                }, 3000);
+                            },
+                            error: function (jqXhr, textStatus, errorThrown) {
+                                console.log(errorThrown);
+                                $('#editModal').modal('hide');
+                                $("#snackbar").html(errorThrown).addClass("show");
+                                setTimeout(function () {
+                                    $("#snackbar").removeClass("show");
+                                }, 3000);
+                            }
+                        });
+                        e.preventDefault;
+                    });
+
+
+                });
+
+
+            </script>
+
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

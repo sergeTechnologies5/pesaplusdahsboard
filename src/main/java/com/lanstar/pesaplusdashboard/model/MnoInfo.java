@@ -10,15 +10,9 @@ public class MnoInfo {
         this.id = id;
     }
 
-    // Getter Methods
-
     public Long getId() {
         return id;
     }
-
-
-    // Setter Methods
-
 
     public void setId(Long id) {
         this.id = id;

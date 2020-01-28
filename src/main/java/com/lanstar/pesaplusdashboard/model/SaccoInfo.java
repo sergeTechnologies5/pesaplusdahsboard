@@ -10,14 +10,9 @@ public class SaccoInfo {
         this.id = id;
     }
 
-    // Getter Methods
-
-    public float getId() {
+    public Long getId() {
         return id;
     }
-
-    // Setter Methods
-
 
     public void setId(Long id) {
         this.id = id;

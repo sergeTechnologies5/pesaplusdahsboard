@@ -10,8 +10,24 @@ public class CustomerInfo {
     private Integer advanceLimit;
     private Integer withdrawalLimit;
 
+    public CustomerInfo() {
+    }
+
+    public CustomerInfo(String firstName, String secondName, String lastName, String phoneNumber, String email, String nationalId, Integer advanceLimit, Integer withdrawalLimit) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.nationalId = nationalId;
+        this.advanceLimit = advanceLimit;
+        this.withdrawalLimit = withdrawalLimit;
+    }
+
 
     // Getter Methods
+
+
 
     public String getFirstName() {
         return firstName;

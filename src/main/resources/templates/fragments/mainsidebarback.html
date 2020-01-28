@@ -1,0 +1,104 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+        <li class="active treeview">
+            <a href="/transactions/mpesa_fosa">
+                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="treeview">
+            <a href="/dashboard/index">
+                <img style="width:40px;height:40px"  src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+
+                <span>
+              <span th:text="${user.username != null ? user.username : 'NOT FOUND'}"></span>
+            </span>
+            </a>
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-briefcase"></i>
+                <span>Transactions</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/transactions/mpesa_fosa"><i class="fa fa-dollar"></i> Mpesa - Fosa</a></li>
+                <li><a href="/transactions/fosa_mpesa"><i class="fa fa-exchange"></i> Fosa  - Mpesa</a></li>
+                <li><a href="/transactions/airtime"><i class="fa fa-signal"></i> Airtime</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Mpesa</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/mpesa/view_float"><i class="fa fa-dollar"></i> View Balances</a></li>
+                <li><a href="/mpesa/load_float"><i class="fa fa-plus"></i> Load Float</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-fax"></i>
+                <span>Airtime</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/airtime/view_float"><i class="fa fa-fax"></i> View Balances</a></li>
+                <li><a href="/airtime/add_float"><i class="fa fa-plus"></i> Load Float</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-group"></i>
+                <span>Customers</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li  th:if="${#lists.contains(user.roles, &quot;API_USER&quot;)  }" ><a href="/customers/create_customer"><i class="fa fa-users"></i> Register Customers</a></li>
+                <li><a href="/customers/inactive_customers"><i class="fa fa-users"></i> View Inactive</a></li>
+                <li><a href="/customers/active_customers"><i class="fa fa-users"></i> View Active </a></li>
+                <li><a href="/customers/view_customers"><i class="fa fa-users"></i> View Newly Registered </a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-print"></i>
+                <span>Reports</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/reports/mpesa_reports"><i class="fa fa-money"></i> Mpesa</a></li>
+                <li><a href="/reports/airtime_reports"><i class="fa fa-fax"></i> Airtime</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-phone"></i>
+                <span>Ussd Requests</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/ussd/ussd"><i class="fa fa-asterisk"></i>  551901</a></li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-gears"></i>
+                <span>Settings</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/settings/"><i class="fa fa-ship"></i> System</a></li>
+                <li><a href="/settings/profile"><i class="fa fa-user-times"></i> Profile</a></li>
+                <li><a href="/logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</section>
+<!-- /.sidebar -->

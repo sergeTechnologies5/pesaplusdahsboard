@@ -1,7 +1,11 @@
 package com.lanstar.pesaplusdashboard.controller;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.lanstar.pesaplusdashboard.Response.CustomerMO;
 import com.lanstar.pesaplusdashboard.model.*;
 import com.lanstar.pesaplusdashboard.payload.User;
+import com.lanstar.pesaplusdashboard.request.CustomerChangePin;
 import com.lanstar.pesaplusdashboard.retrofit.network.ApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,12 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import retrofit2.Response;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
 public class CustomerController {
-
+    @Autowired
+    ApiClient apiClient;
 
     @RequestMapping(value = {"/customers"}, method = {RequestMethod.GET})
     public ModelAndView index( Model model) {
@@ -65,7 +72,7 @@ public class CustomerController {
     public ModelAndView edit(@PathVariable Long id, Model model) {
 
      //   model.addAttribute("customer", customerService.get(id));
-        ModelAndView modelAndView = new ModelAndView("customers/form");
+        ModelAndView modelAndView = new ModelAndView("customers/resetpin");
         return modelAndView;
 
     }
@@ -83,45 +90,49 @@ public class CustomerController {
       //  customerService.delete(id);
         ra.addFlashAttribute("successFlash", "Record Deleted Successfully.");
         return "redirect:/customers";
-
-
     }
 
-    @Autowired
-    ApiClient apiClient;
+
 
     @PostMapping("/createCustomer")
     public String createCustomer(@SessionAttribute("user") User user,
                                  RedirectAttributes redirectAttributes,
-                                 @ModelAttribute CustomerInfo customer,
+                                 @ModelAttribute Customer customer,
                                  final  Model model, HttpSession session) throws IOException {
 
        // redirectAttributes.addAttribute("message","Registration Successful");
 //set default
+        System.out.println("C:::"+customer);
+
+        if(customer.getEmail().equalsIgnoreCase("")){
+            customer.setEmail("noemail@gmail.com");
+        }
+        if(customer.getAdvanceLimit()==null){
+            customer.setAdvanceLimit(0);
+        }if(customer.getWithdrawalLimit()==null){
+            customer.setAdvanceLimit(0);
+        }
+
         CustomerModel customerModel= new CustomerModel();
-        customerModel.setMnoInfo(new MnoInfo(1L));
-        customerModel.setSaccoInfo(new SaccoInfo(73L));
-        customerModel.setCustomerInfo(customer);
+        customerModel.setMnoInfo(new MnoInfo(customer.getMoID()));
+        customerModel.setSaccoInfo(new SaccoInfo(customer.getSaccoID()));
+        CustomerInfo customerInfo=new CustomerInfo(customer.getFirstName(), customer.getSecondName(),
+                customer.getLastName(), customer.getPhoneNumber(),
+                customer.getEmail(), customer.getNationalId(), customer.getAdvanceLimit(), customer.getWithdrawalLimit());
+        customerModel.setCustomerInfo(customerInfo);
         System.out.println(customerModel);
         apiClient.setAuthToken(user.getToken());
         Response<String> response = apiClient.getService().createCustomer(customerModel).execute();
         if (response.isSuccessful()){
-            //  JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
-            //   String token = jsonObject.get("token").getAsString();
-            //  ModelAndView modelAndView = new ModelAndView();
-            // modelAndView.addObject("user", user);
-            //  model.addAttribute("user", user);
-            redirectAttributes.addAttribute("message","Registration Successful");
-            System.out.println("ResponseBody:::"+response.body().toString());
-            System.out.println("ResponseHeader:::"+response.headers().toString());
-            System.out.println("Response"+response.toString());
-            model.addAttribute("message","Registration Successful");
-            session.setAttribute("mySessionAttribute", "Registration Successful");
-            String message="Registration Successful";
-            //  model.addAttribute("message","Registration Successful");
+              JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
+              String customerStatus = jsonObject.get("customerStatus").getAsString();
+           // {"customerStatus":"Customer Registered  in NSSF Sacco Ltd Successfully"}
+            redirectAttributes.addAttribute("message",customerStatus);
+            model.addAttribute("message",customerStatus);
+            session.setAttribute("mySessionAttribute", customerStatus);
+            String message=customerStatus;
             return "redirect:/customers/create_customer?message="+message;
         }else {
-            System.out.println("Error");
             //  model.addAttribute("error", "Unauthorized Access");
             redirectAttributes.addAttribute("message","Registration Unsuccessful");
             model.addAttribute("error", "Unauthorized Access");
@@ -131,5 +142,7 @@ public class CustomerController {
             return "redirect:/customers/create_customer?message="+message;
         }
     }
+
+
 
 }

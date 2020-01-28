@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+
+    <title>View Customers</title>
+    <script src="/js/inactivecustomers.js"></script>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Customers</h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Customers</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+        <div class="page-title">
+            <h2>
+                Inactive Customers
+            </h2>
+        </div>
+        <!-- END PAGE TITLE -->
+
+        <div class="row">
+            <!--            <table width="100%" class="display" id="example"></table>-->
+
+            <!--                   ACTION INCLUDE <span>Edit</span>-->
+            <!--                        <span>Activate/Deactivate</span>-->
+            <!--                        <span>Reset  Pin</span>-->
+            <table class="table datatable display" id="customers">
+                <thead>
+                <tr>
+                    <th>Names</th>
+                    <th>Phone Number</th>
+                    <th>Customer ID</th>
+                    <th>Registered/Not Registered</th>
+                    <th>Active/InActive</th>
+                    <th>Action</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+                <tr th:each="clientlist : ${customerRList}">
+                    <td th:text="${clientlist.customerFirstName} +' '+ ${clientlist.customerLastName} ">Text ...</td>
+                    <td th:text="${clientlist.customerPhoneNumber}">Text ...</td>
+                    <td th:text="${clientlist.id}">Text ...</td>
+                    <td>
+                        <div th:switch="${clientlist.isRegistrationComplete}">
+                            <p th:case="'false'">Not Registered</p>
+                            <p th:case="'true'">Registered</p>
+                            <p th:case="*">NA</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div th:switch="${clientlist.customerStatus}">
+                            <p th:case="'false'">Not Active</p>
+                            <p th:case="'true'">Active</p>
+                            <p th:case="*">NA</p>
+                        </div>
+                    </td>
+
+                    <td>
+                        <ul id="uListActionCustomer">
+<!--                            <li><a href="#" class="editing"> Edit</a></li>-->
+<!--                            <li><span style="width:3px;"></span></li>-->
+<!--                            <li><a href="#" class="resetPin"> Reset Pin </a></li>-->
+<!--                            <li><span style="width:3px;"></span></li>-->
+                            <li><a href="#" class="activate"> Activate </a></li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <th>Names</th>
+                    <th>Phone Number</th>
+                    <th>Customer ID</th>
+                    <th>Registered/Not Registered</th>
+                    <th>Active/InActive</th>
+                    <th>Action</th>
+                </tr>
+                </tfoot>
+
+
+            </table>
+
+            <!-- Activate Customer -->
+            <div class="modal fade" id="activateCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form data-toggle="validator" id="activateCustomerForm" method="post">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="activateCustomerTitle">Activate Customer</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                <h4>Are you sure, you want to activate this Customer </h4>
+                                <p><b>Names:</b> <span id="activateCustomerNames"></span></p>
+                                <p><b>Customer ID:</b> <span id="activateCustomerID"></span></p>
+                                <p><b>Phone Number :</b> <span id="activateCustomerPhoneNumber"></span></p>
+                                </p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id="activateCustomerFormSubmit" class="btn btn-primary">Activate</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div style="margin-bottom: 100px">
+
+            </div>
+
+
+            <script type="text/javascript">
+                /*<![CDATA[*/
+
+
+                /*]]>*/
+            </script>
+
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>

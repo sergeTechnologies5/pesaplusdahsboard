@@ -21,27 +21,30 @@
                 <a href="/customers" type="button" class="btn btn-box-tool"><i class="fa fa-list-ul"></i></a>
             </div>
 
-            <div class="alert alert-info alert-dismissible" th:style="${param.message} ? 'display:block' : 'display:none'">
+            <div class="alert alert-info alert-dismissible"
+                 th:style="${param.message} ? 'display:block' : 'display:none'">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>
                     <p th:text="${session.mySessionAttribute}" th:unless="${session == null}">[...]</p>
-                    </strong>
+                </strong>
             </div>
         </div>
-        <form  action="#" th:action="@{/createCustomer}" th:object="${customer}"  role="form" method="post">
+        <form action="#" id="RegisterForm" th:object="${customer}" role="form" method="post">
             <div class="box-body">
-                <input type="hidden"/>
+                <input type="hidden" id="userToken" th:value="${user.token}"  />
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="firstname">FirstName</label>
-                            <input type="text" required="true"  th:field="*{firstName}" class="form-control" id="firstname"/>
+                            <label for="firstName">FirstName</label>
+                            <input type="text"  required="true" th:field="*{firstName}" class="form-control"
+                                   id="firstName"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="lastname">LastName</label>
-                            <input type="text" required="true" th:field="*{lastName}" class="form-control" id="lastname"/>
+                            <label for="lastName">LastName</label>
+                            <input type="text" required="true" th:field="*{lastName}" class="form-control"
+                                   id="lastName"/>
                         </div>
                     </div>
 
@@ -50,13 +53,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="secondName">Second Name</label>
-                            <input type="text" required="true" th:field="*{secondName}" class="form-control" id="secondName"/>
+                            <input type="text" required="true" th:field="*{secondName}" class="form-control"
+                                   id="secondName"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">E-mail</label>
-                            <input type="email"  th:field="*{email}" class="form-control" id="email"/>
+                            <input type="email" th:field="*{email}" class="form-control" id="email"/>
                         </div>
                     </div>
 
@@ -66,13 +70,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="nationalId">National Id</label>
-                            <input type="text" required="true" th:field="*{nationalId}" class="form-control" id="nationalId"/>
+                            <input type="text" required="true" th:field="*{nationalId}" class="form-control"
+                                   id="nationalId"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="phoneNumber">Phone Number</label>
-                            <input type="text" required="true" th:field="*{phoneNumber}" class="form-control" id="phoneNumber"/>
+                            <input type="text" required="true" th:field="*{phoneNumber}" class="form-control"
+                                   id="phoneNumber"/>
                         </div>
                     </div>
                 </div>
@@ -81,25 +87,104 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="advanceLimit">Advance Limit</label>
-                            <input type="number"  th:field="*{advanceLimit}" class="form-control" id="advanceLimit"/>
+                            <input type="number" th:field="*{advanceLimit}" class="form-control" id="advanceLimit"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="withdrawalLimit">Withdrawal Limit</label>
-                            <input type="number"  th:field="*{withdrawalLimit}" class="form-control" id="withdrawalLimit"/>
+                            <input type="number" th:field="*{withdrawalLimit}" class="form-control"
+                                   id="withdrawalLimit"/>
                         </div>
                     </div>
 
                 </div>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="moID">Customer Mobile Operator </label>
+                            <select class="form-control" id="moID" th:field="*{moID}">
+                                <option th:each="customerMO : ${customerMOList}" th:text="${customerMO.operatorName}"
+                                        th:value="${customerMO.id}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" style="visibility: hidden;">
+                            <label for="saccoID">Customer Sacco</label>
+                            <select class="form-control" id="saccoID" th:field="*{saccoID}">
+                                <option th:each="saccoResponse : ${saccoList}" th:text="${saccoResponse.saccoName}"
+                                        th:value="${saccoResponse.saccoId}"></option>
+                            </select>
+                        </div>
+                    </div>
 
+                </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Register Customer</button>
+                <button type="submit" id="submitButton" class="btn btn-primary"> <i id="submitIcon" class="fa fa-circle-o-notch fa-spin"></i> Register Customer</button>
             </div>
         </form>
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#submitIcon").hide();
+            $('#RegisterForm').submit(function processChangePin(e) {
+                $("#submitIcon").show();
+
+                var dataForm = {
+                    firstName: $("#firstName").val(),
+                    secondName: $("#secondName").val(),
+                    lastName: $("#lastName").val(),
+                    phoneNumber: $("#phoneNumber").val(),
+                    email: $("#email").val(),
+                    nationalId: $("#nationalId").val(),
+                    advanceLimit: parseInt($("#advanceLimit").val()) || 0,
+                    withdrawalLimit: parseInt($("#withdrawalLimit").val()) || 0,
+                    saccoID: parseInt($("#saccoID").val(), 0),
+                    moID: parseInt($("#moID").val(), 0)
+                };
+
+                console.log(JSON.stringify(dataForm));
+                 // url: 'https://197.248.124.61:9095/api/v1/member',
+             //   url: '/register_customer_api',
+             //    alert("Trying to send data");
+             //    alert(userToken);
+
+                $.ajax({
+                    url: '/register_customer_api',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify(dataForm),
+                    success: function (data, textStatus, jQxhr) {
+                        $('#editModal').modal('hide');
+                        $("#snackbar").html(data).addClass("show");
+                        setTimeout(function () {
+                            $("#snackbar").removeClass("show");
+                        }, 5000);
+                        $("#submitIcon").hide();
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                        $('#editModal').modal('hide');
+                        $("#snackbar").html(errorThrown).addClass("show");
+                        setTimeout(function () {
+                            $("#snackbar").removeClass("show");
+                        }, 5000);
+                        $("#submitIcon").hide();
+                    }
+                });
+                e.preventDefault;
+            });
+
+
+        });
+
+
+    </script>
+
 </div>
 </body>
 </html>

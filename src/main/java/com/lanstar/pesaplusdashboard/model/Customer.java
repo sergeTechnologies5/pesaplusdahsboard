@@ -1,5 +1,8 @@
 package com.lanstar.pesaplusdashboard.model;
 
+import com.lanstar.pesaplusdashboard.Response.CustomerMO;
+import com.lanstar.pesaplusdashboard.Response.SaccoResponse;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -10,21 +13,40 @@ public class Customer implements Serializable {
     private String phoneNumber;
     private String email;
     private String nationalId;
-    private BigDecimal advanceLimit;
-    private BigDecimal withdrawalLimit;
+    private Integer advanceLimit;
+    private Integer withdrawalLimit;
+
+    private Long  saccoID;
+    private Long moID;
 
     public Customer() {
     }
 
-    public Customer(String firstName, String secondName, String lastName, String phoneNumber, String email, String nationalId, BigDecimal advanceLimit, BigDecimal withdrawalLimit) {
+    public Customer(String firstName, String secondName, String lastName, String phoneNumber, String email, String nationalId) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.nationalId = nationalId;
-        this.advanceLimit = advanceLimit;
-        this.withdrawalLimit = withdrawalLimit;
+
+    }
+
+
+    public Long getSaccoID() {
+        return saccoID;
+    }
+
+    public void setSaccoID(Long saccoID) {
+        this.saccoID = saccoID;
+    }
+
+    public Long getMoID() {
+        return moID;
+    }
+
+    public void setMoID(Long moID) {
+        this.moID = moID;
     }
 
     public String getFirstName() {
@@ -75,19 +97,35 @@ public class Customer implements Serializable {
         this.nationalId = nationalId;
     }
 
-    public BigDecimal getAdvanceLimit() {
+    public Integer getAdvanceLimit() {
         return advanceLimit;
     }
 
-    public void setAdvanceLimit(BigDecimal advanceLimit) {
+    public void setAdvanceLimit(Integer advanceLimit) {
         this.advanceLimit = advanceLimit;
     }
 
-    public BigDecimal getWithdrawalLimit() {
+    public Integer getWithdrawalLimit() {
         return withdrawalLimit;
     }
 
-    public void setWithdrawalLimit(BigDecimal withdrawalLimit) {
+    public void setWithdrawalLimit(Integer withdrawalLimit) {
         this.withdrawalLimit = withdrawalLimit;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", nationalId='" + nationalId + '\'' +
+                ", advanceLimit=" + advanceLimit +
+                ", withdrawalLimit=" + withdrawalLimit +
+                ", saccoID=" + saccoID +
+                ", moID=" + moID +
+                '}';
     }
 }
