@@ -67,7 +67,7 @@ $(document).ready(function () {
 
     //reset pin form
     // $("#resetPinPhoneNumber").html();
-    $('#resetPinForm').submit(function (e) {
+    $('#resetPinFormSubmit').click(function (e) {
         var dataForm = {
             pin: "1234",
             phoneNumber: $("#resetPinPhoneNumber").html(),
@@ -82,17 +82,10 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(dataForm),
             success: function (data, textStatus, jQxhr) {
-                $("#snackbar").html(data).addClass("show");
-                setTimeout(function () {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
+                toastr["success"](data);
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
-                $("#snackbar").html(errorThrown).addClass("show");
-                setTimeout(function () {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
+                toastr["error"](errorThrown);
             }
         });
         e.preventDefault;
@@ -100,13 +93,11 @@ $(document).ready(function () {
 
 
     //deactivate Customer
-    $('#deactivateCustomerForm').submit(function (e) {
+    $('#deactivateCustomerFormSubmit').click(function (e) {
         var dataForm = {
             phoneNumber: $("#deactivateCustomerPhoneNumber").html(),
             id: $("#deactivateCustomerID").html()
         };
-
-        console.log(JSON.stringify(dataForm));
 
         //   url: 'https://197.248.124.61:9095/api/v1/member/reset-pin',
         $.ajax({
@@ -116,18 +107,12 @@ $(document).ready(function () {
             data: JSON.stringify(dataForm),
             success: function (data, textStatus, jQxhr) {
                 $('#deactivateCustomer').modal('hide');
-                $("#snackbar").html(data).addClass("show");
-                setTimeout(function () {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
+                toastr["success"](data);
+               // setInterval('location.reload()', 3000);
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
                 $('#deactivateCustomer').modal('hide');
-                $("#snackbar").html(errorThrown).addClass("show");
-                setTimeout(function () {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
+                toastr["error"](errorThrown);
             }
         });
         e.preventDefault;
@@ -135,14 +120,12 @@ $(document).ready(function () {
 
 
 //edit customer deatils
-    $('#editCustomerForm').submit(function processChangePin(e) {
+    $('#editCustomerFormSubmit').click(function (e) {
         var dataForm = {
             pin: $("#pin").val(),
             phoneNumber: $("#phoneNumber").val(),
             id: $("#customerId").val()
         };
-
-        console.log(JSON.stringify(dataForm));
 
         //   url: 'https://197.248.124.61:9095/api/v1/member/reset-pin',
         $.ajax({
@@ -152,18 +135,17 @@ $(document).ready(function () {
             data: JSON.stringify(dataForm),
             success: function (data, textStatus, jQxhr) {
                 $('#editModal').modal('hide');
-                $("#snackbar").html(data).addClass("show");
-                setTimeout(function () {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
+                toastr["success"](data);
+                setInterval('location.reload()', 3000);
+                // $("#snackbar").html(data).addClass("show");
+                // setTimeout(function () {
+                //     $("#snackbar").removeClass("show");
+                // }, 5000);
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
                 $('#editModal').modal('hide');
-                $("#snackbar").html(errorThrown).addClass("show");
-                setTimeout(function () {
-                    $("#snackbar").removeClass("show");
-                }, 5000);
+                toastr["error"](errorThrown);
             }
         });
         e.preventDefault;

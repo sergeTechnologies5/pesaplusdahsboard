@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Create Mnos</h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active"></li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Mobile Number Operator</h3>
+            <div class="box-tools pull-right">
+                <a href="/customers" type="button" class="btn btn-box-tool"><i class="fa fa-list-ul"></i></a>
+            </div>
+        </div>
+        <form data-toggle="validator" role="form"  method="post">
+            <div class="box-body">
+                <input type="hidden" />
+
+                <div class="form-group">
+                    <label for="Firstname">Operator Name</label>
+                    <input type="text" required="true" class="form-control"  id="firstname" />
+                </div>
+                <div class="form-group">
+                    <label for="Lastname">Phone Number</label>
+                    <input type="text" required="true" class="form-control"  id="lastname" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Service Name</label>
+                    <input type="email" required="true" class="form-control"  id="email" />
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

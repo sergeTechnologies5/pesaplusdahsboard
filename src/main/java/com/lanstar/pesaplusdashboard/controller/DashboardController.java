@@ -1,8 +1,7 @@
 package com.lanstar.pesaplusdashboard.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import com.lanstar.pesaplusdashboard.Response.CustomerMO;
 import com.lanstar.pesaplusdashboard.Response.CustomerR;
 import com.lanstar.pesaplusdashboard.Response.SaccoResponse;
@@ -10,6 +9,7 @@ import com.lanstar.pesaplusdashboard.model.Customer;
 import com.lanstar.pesaplusdashboard.model.Sacco;
 import com.lanstar.pesaplusdashboard.payload.User;
 import com.lanstar.pesaplusdashboard.retrofit.network.ApiClient;
+import com.lanstar.pesaplusdashboard.utils.LanstarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,7 @@ import retrofit2.Response;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class DashboardController {
 
     @Autowired
     ApiClient apiClient;
+
+    @Autowired
+    LanstarUtils lanstarUtils;
 
     @RequestMapping("/")
     public String login() {
@@ -50,13 +54,15 @@ public class DashboardController {
         return "dashboard/index";
     }
 
+
+
     /* CUSTOMER  */
 
       //create customer
     @RequestMapping("customers/create_customer")
     public String addCustomer(@SessionAttribute("user") User user, final Model model ) throws IOException {
 
-        model.addAttribute("customerMOList",getCustomerMO(user));
+        model.addAttribute("customerMOList",lanstarUtils.getCustomerMO(user));
         model.addAttribute("saccoList",getSaccos(user));
         model.addAttribute("user",user);
         model.addAttribute("customer",new Customer());
@@ -126,38 +132,6 @@ public class DashboardController {
     }
 
 
-
-
-
-    @RequestMapping("sacco/create_sacco")
-    public String addSacco(@SessionAttribute("user") User user, final Model model ) {
-        model.addAttribute("user",user);
-        model.addAttribute("sacco",new Sacco());
-        return "sacco/create_sacco";
-    }
-
-
-    public List<CustomerMO> getCustomerMO(User user) throws IOException {
-        apiClient.setAuthToken(user.getToken());
-        List<CustomerMO> customerMOList=new ArrayList<>();
-        Response<String> response = apiClient.getService().getMnos().execute();
-        if (response.isSuccessful()) {
-            assert response.body() != null;
-            JsonArray jsonArray = new JsonParser().parse(response.body()).getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                JsonObject jsonObject = new JsonParser().parse(jsonArray.get(i).toString()).getAsJsonObject();
-                CustomerMO customerMO=new CustomerMO(jsonObject.get("id").getAsLong(),
-                        jsonObject.get("operatorName").getAsString(),
-                        jsonObject.get("phoneNumber").getAsString(),
-                        jsonObject.get("serviceName").getAsString());
-                customerMOList.add(customerMO);
-            }
-        } else {
-            System.out.println("Error:::"+response.errorBody());
-        }
-        return customerMOList;
-    }
-
     public List<SaccoResponse> getSaccos(User user) throws IOException {
         apiClient.setAuthToken(user.getToken());
         List<SaccoResponse> saccoResponseList=new ArrayList<>();
@@ -174,6 +148,9 @@ public class DashboardController {
         }
         return saccoResponseList;
     }
+
+
+
 
 
 

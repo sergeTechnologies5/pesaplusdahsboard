@@ -56,6 +56,10 @@ public interface ApiService {
     @GET("api/v1/saccos/s")
     Call<String> getSaccos();
 
+    //get all saccos
+    @GET("api/v1/saccos/all")
+    Call<String> getAllSaccos();
+
 
     //     MOBILE OPERATORS
 

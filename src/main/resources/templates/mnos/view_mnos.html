@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Dashboard</title>
+    <script src="/js/viewMnos.js"></script>
+</head>
+<body>
+<section layout:fragment="header">
+</section>
+<div layout:fragment="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">All Saccos</h3>
+            <div class="box-tools pull-right">
+                <br clear="all"/>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped" id="mnosTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Operator Name</th>
+                    <th>Phone Number</th>
+                    <th>Service Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${mnos}">
+                    <td th:text="${row.id}"></td>
+                    <td th:text="${row.operatorName}"></td>
+                    <td th:text="${row.phoneNumber}"></td>
+                    <td th:text="${row.serviceName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

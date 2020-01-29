@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Dashboard</title>
+    <script src="/js/admindashboard.js"></script>
+</head>
+<body>
+<section layout:fragment="header">
+</section>
+<div layout:fragment="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">All Saccos</h3>
+            <div class="box-tools pull-right">
+                <br clear="all"/>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped" id="saccosTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Sacco Name</th>
+                    <!--                    <th>CSNO</th>-->
+                    <!--                    <th>Balance Amount</th>-->
+                    <!--                    <th>Airtime Balance</th>-->
+                    <!--                    <th>Date Updated</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${saccos}">
+                    <td th:text="${row.saccoId}"></td>
+                    <td th:text="${row.saccoName}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -110,6 +110,60 @@ public class RestControllers {
     }
 
 
+    //  SUBMIT USER TO SERVER
+    @PostMapping("/createUser")
+    public String createCustomer(@SessionAttribute("user") User user,
+                                 @RequestBody SystemUser systemUser,
+                                 final  Model model, HttpSession session) throws IOException {
+
+        System.out.println(systemUser);
+
+        return systemUser.getFirstName();
+        // redirectAttributes.addAttribute("message","Registration Successful");
+//set default
+//        System.out.println("C:::"+customer);
+//
+//        if(customer.getEmail().equalsIgnoreCase("")){
+//            customer.setEmail("noemail@gmail.com");
+//        }
+//        if(customer.getAdvanceLimit()==null){
+//            customer.setAdvanceLimit(0);
+//        }if(customer.getWithdrawalLimit()==null){
+//            customer.setAdvanceLimit(0);
+//        }
+//
+//        CustomerModel customerModel= new CustomerModel();
+//        customerModel.setMnoInfo(new MnoInfo(customer.getMoID()));
+//        customerModel.setSaccoInfo(new SaccoInfo(customer.getSaccoID()));
+//        CustomerInfo customerInfo=new CustomerInfo(customer.getFirstName(), customer.getSecondName(),
+//                customer.getLastName(), customer.getPhoneNumber(),
+//                customer.getEmail(), customer.getNationalId(), customer.getAdvanceLimit(), customer.getWithdrawalLimit());
+//        customerModel.setCustomerInfo(customerInfo);
+//        System.out.println(customerModel);
+//        apiClient.setAuthToken(user.getToken());
+//        Response<String> response = apiClient.getService().createCustomer(customerModel).execute();
+//        if (response.isSuccessful()){
+//            JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
+//            String customerStatus = jsonObject.get("customerStatus").getAsString();
+//            // {"customerStatus":"Customer Registered  in NSSF Sacco Ltd Successfully"}
+//            redirectAttributes.addAttribute("message",customerStatus);
+//            model.addAttribute("message",customerStatus);
+//            session.setAttribute("mySessionAttribute", customerStatus);
+//            String message=customerStatus;
+//            return "redirect:/customers/create_customer?message="+message;
+//        }else {
+//            //  model.addAttribute("error", "Unauthorized Access");
+//            redirectAttributes.addAttribute("message","Registration Unsuccessful");
+//            model.addAttribute("error", "Unauthorized Access");
+//            System.out.println("Error"+response.errorBody().string());
+//            String message="Registration Not Successful";
+//            session.setAttribute("mySessionAttribute", "Registration Not Successful");
+//            return "redirect:/customers/create_customer?message="+message;
+//        }
+    }
+
+
+
 
 
 }

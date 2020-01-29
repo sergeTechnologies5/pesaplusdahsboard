@@ -43,13 +43,18 @@ public class LoginController {
             JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
             String token = jsonObject.get("token").getAsString();
             user = new User(signinRequest.getUsername(), token, processToken(token));
-         //   user = new User(signinRequest.getUsername(), token, Arrays.asList("LANSTAR_USER"));
+          //  user = new User(signinRequest.getUsername(), token, Arrays.asList("LANSTAR_ADMIN"));
 
             //  ModelAndView modelAndView = new ModelAndView();
             // modelAndView.addObject("user", user);
             model.addAttribute("user", user);
             System.out.println(user.getRoles());
+
+            if(user.getRoles().contains("LANSTAR_ADMIN")){
+                return "redirect:" + "dashboard/admin";
+            }
             return "redirect:" + "dashboard/index";
+
         } else {
             System.out.println("Loading Login again");
             model.addAttribute("error", "Unauthorized Access");

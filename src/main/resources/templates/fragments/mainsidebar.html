@@ -17,13 +17,50 @@
                     <img style="width:40px;height:40px" src="/dist/img/user2-160x160.jpg" class="img-circle"
                          alt="User Image"/>
 
-                    <span>
               <span th:text="${user.username != null ? user.username : 'NOT FOUND'}"></span>
-                         </span>
+
                 </a>
             </li>
 
-            <li class="treeview">
+
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;LANSTAR_ADMIN&quot;) }" >
+                <a href="#">
+                    <i class="fa fa-briefcase"></i>
+                    <span>Sacco</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/sacco/view_saccos"><i class="fa fa-dollar"></i> View Saccos</a></li>
+                    <li><a href="/sacco/create_sacco"><i class="fa fa-exchange"></i> Create Sacco</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;LANSTAR_ADMIN&quot;) }" >
+                <a href="#">
+                    <i class="fa fa-briefcase"></i>
+                    <span>MNOS</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/mnos/view_mnos"><i class="fa fa-dollar"></i> View MNOS</a></li>
+                    <li><a href="/mnos/create_mnos"><i class="fa fa-exchange"></i> Create MNO</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;LANSTAR_ADMIN&quot;) }" >
+                <a href="#">
+                    <i class="fa fa-briefcase"></i>
+                    <span>USERS</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/users/view_users"><i class="fa fa-dollar"></i> View Users</a></li>
+                    <li><a href="/users/create_user"><i class="fa fa-exchange"></i> Create User</a></li>
+                </ul>
+            </li>
+
+
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) }">
                 <a href="#">
                     <i class="fa fa-briefcase"></i>
                     <span>Transactions</span>
@@ -35,7 +72,7 @@
                     <li><a href="/transactions/airtime"><i class="fa fa-signal"></i> Airtime</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) }">
                 <a href="#">
                     <i class="fa fa-money"></i>
                     <span>Mpesa</span>
@@ -46,7 +83,7 @@
                     <li><a href="/mpesa/load_float"><i class="fa fa-plus"></i> Load Float</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) }">
                 <a href="#">
                     <i class="fa fa-fax"></i>
                     <span>Airtime</span>
@@ -57,20 +94,20 @@
                     <li><a href="/airtime/add_float"><i class="fa fa-plus"></i> Load Float</a></li>
                 </ul>
             </li>
-            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) or #lists.contains(user.roles, &quot;LANSTAR_ADMIN&quot;) or #lists.contains(user.roles, &quot;LANSTAR_USER&quot;) }">
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) }" >
                 <a href="#">
                     <i class="fa fa-group"></i>
                     <span>Customers</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
+                <ul class="treeview-menu" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) }">
                     <li><a href="/customers/create_customer"><i class="fa fa-users"></i> Register Customers</a></li>
                     <li><a href="/customers/inactive_customers"><i class="fa fa-users"></i> View Inactive</a></li>
                     <li><a href="/customers/active_customers"><i class="fa fa-users"></i> View Active </a></li>
                     <li><a href="/customers/view_customers"><i class="fa fa-users"></i> View Newly Registered </a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) }">
                 <a href="#">
                     <i class="fa fa-print"></i>
                     <span>Reports</span>
@@ -81,7 +118,7 @@
                     <li><a href="/reports/airtime_reports"><i class="fa fa-fax"></i> Airtime</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) }">
                 <a href="#">
                     <i class="fa fa-phone"></i>
                     <span>Ussd Requests</span>
@@ -91,15 +128,15 @@
                     <li><a href="/ussd/ussd"><i class="fa fa-asterisk"></i> 551901</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview" th:if="${#lists.contains(user.roles, &quot;API_USER&quot;) or #lists.contains(user.roles, &quot;LANSTAR_ADMIN&quot;) or #lists.contains(user.roles, &quot;LANSTAR_USER&quot;) }" >
                 <a href="#">
                     <i class="fa fa-gears"></i>
                     <span>Settings</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="/settings/"><i class="fa fa-ship"></i> System</a></li>
-                    <li><a href="/settings/profile"><i class="fa fa-user-times"></i> Profile</a></li>
+                <ul class="treeview-menu" >
+<!--                    <li><a href="/settings/"><i class="fa fa-ship"></i> System</a></li>-->
+<!--                    <li><a href="/settings/profile"><i class="fa fa-user-times"></i> Profile</a></li>-->
                     <li><a href="/logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
                 </ul>
             </li>
